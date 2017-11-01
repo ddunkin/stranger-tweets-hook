@@ -1,0 +1,15 @@
+{
+  "name": "stranger-tweets",
+  "version": "1.0.0",
+  "description": "this is the description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "microcule index.js"
+  },
+  "dependencies": {
+    "microcule": "*",
+    "mqtt": "^2.13.1"
+  },
+  "license": "MIT"
+}
