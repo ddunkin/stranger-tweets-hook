@@ -2,8 +2,10 @@ var mqtt = require("mqtt");
 var twilio = require("twilio");
 
 module["exports"] = function myService(req, res, next) {
-  console.log(req.params);
-  console.log(req.body);
+  if (!(req.params.password && req.params.Body)) {
+    res.status(400).send();
+    return;
+  }
   const mqttClient = mqtt.connect({
     host: "m13.cloudmqtt.com",
     port: 21025,
@@ -12,7 +14,8 @@ module["exports"] = function myService(req, res, next) {
     password: req.params.password
   });
 
-  mqttClient.publish("test", JSON.stringify(req.params), (err, packet) => {
+  console.log(req.params.Body);
+  mqttClient.publish("message", req.params.Body, (err, packet) => {
     if (err) {
       next(err);
     } else {
