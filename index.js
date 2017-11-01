@@ -2,6 +2,8 @@ var mqtt = require("mqtt");
 var twilio = require("twilio");
 
 module["exports"] = function myService(req, res, next) {
+  console.log(req.params);
+  console.log(req.body);
   const mqttClient = mqtt.connect({
     host: "m13.cloudmqtt.com",
     port: 21025,
