@@ -2,10 +2,22 @@ var mqtt = require("mqtt");
 var twilio = require("twilio");
 
 module["exports"] = function myService(req, res, next) {
-  var twiml = new twilio.TwimlResponse();
-  twiml.message("The Robots are coming! Head for the hills!");
-  res.writeHead(200, { "Content-Type": "text/xml" });
-  res.end(twiml.toString());
+  const mqttClient = mqtt.connect({
+    host: "m13.cloudmqtt.com",
+    port: 21025,
+    protocol: "mqtts",
+    username: "ygxbisot",
+    password: req.params.password
+  });
 
-  // res.json(req.params);
+  mqttClient.publish("test", JSON.stringify(req.params), (err, packet) => {
+    if (err) {
+      next(err);
+    } else {
+      var twiml = new twilio.TwimlResponse();
+      twiml.message("Sent");
+      res.writeHead(200, { "Content-Type": "text/xml" });
+      res.end(twiml.toString());
+    }
+  });
 };
